@@ -5,10 +5,10 @@ using namespace std;
 void welcome();
 bool logincheck();
 bool logincheckfile();
-void generatenewcustomer(string t);
+void generate(string t);
 int test()
 {
-    generatenewcustomer("customer");
+    generate("customer");
     return 0;
 }
 class employee;
@@ -19,6 +19,7 @@ int main()
     while(logincheck())
     {
         system("color 7");
+        generate("customer");
         // cout<<"Condition true";
         // test();
         return 0;
@@ -101,20 +102,20 @@ bool logincheckfile()
     file.close();
 }
 
-void generatenewcustomer(string t)
+void generate(string t)
 {
     if(t=="customer")
     {
-        system("customer.cmd");
+        system("sources\\batchfiles\\customer.cmd");
     }
     else if(t=="employee")
     {
-        system("employee.cmd");
+        system("sources\\batchfiles\\employee.cmd");
     }
     else {
         if(t=="password")
     {
-        system("password.cmd");
+        system("sources\\batchfiles\\password.cmd");
     }
     }
 }

@@ -3,5 +3,6 @@
 @REM generate.exe
 @REM echo off
 @echo off
-cd sources\customer
-generate.exe
+cd sources
+cd customer
+generate
