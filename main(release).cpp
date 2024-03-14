@@ -1,9 +1,10 @@
 #include<iostream>
-#include<bits/stdc++.h>
+//#include<bits/stdc++.h>
 #include<string>
 #include<windows.h>
 #include<fstream>
 #include<conio.h>
+#include<sstream>
 using namespace std;
 
 // Function prototypes

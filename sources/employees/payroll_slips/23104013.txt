@@ -1,0 +1,15 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Payroll Slip
+-------------------------
+Employee Name: rohan batra
+Employee Age: 18
+Employee ID: 23104013
+Department: tesdt‡M‡M‡M passed
+Gross Salary: 15.2
+-------------------------
+Net Salary: 14.5
+Tax Payable: 1.52
+-------------------------

@@ -1,0 +1,14 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Payroll Slip
+-------------------------
+Employee Name: rohan batra
+Employee Age: 25
+Employee ID: 23104010
+Department: manager and ceo
+Gross Salary: 788888
+-------------------------
+Net Salary: 749444
+Tax Payable: 107778

@@ -1,5 +1,5 @@
 #include<iostream>
-#include<bits/stdc++.h>
+#include<sstream>
 #include<string>
 #include<windows.h>
 #include<fstream>
@@ -30,6 +30,7 @@ void preloadtest() {
 int main()
 {
     //system("mode con cols=100 lines=50");
+    preloadtest();
     welcome();
     while(loginsystem())
     {
@@ -152,7 +153,7 @@ void maimenu()
 }
 string inttostring(int num) 
 {
-    std::stringstream ss;
+    stringstream ss{};
     ss << num;
     return ss.str();
 }

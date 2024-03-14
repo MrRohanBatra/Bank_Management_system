@@ -1,10 +1,13 @@
 #include<iostream>
-#include<bits/stdc++.h>
 #include<string>
 #include<windows.h>
 #include<fstream>
 #include<conio.h>
 #include<stdlib.h>
+#include<iomanip>
+#include<sstream>
+#include<conio.h>
+
 using namespace std;
 
 // Function prototypes
@@ -27,8 +30,9 @@ void deleteemployees();
 void mainmenu();
 void displayemployees();    
 void taxpayble();          
-//void GeneratePayrollReport();
-//void GeneratePayrollSlip();
+float taxpayble(string temp);
+void GeneratePayrollReport();
+void GeneratePayrollSlip();
 float newgetdatafloat();
  
 
@@ -48,7 +52,7 @@ void employees()
     cout<<"3. Delete Employee"<<endl;
     cout<<"4. Display Employees"<<endl;
     cout<<"5. Tax Payable"<<endl;
-    cout<<"6. Generate Payroll Report"<<endl;
+    cout<<"6. Generate Payroll Report" << endl;
     cout<<"7. Generate Payroll Slip"<<endl;
     cout<<"8. Exit to previous menu"<<endl;
     cout<<"Enter your choice: ";
@@ -56,44 +60,63 @@ void employees()
     switch(choice)
     {
         case 1:
-        {   
+        {   cin.ignore();
             addemployees();
+            system("pause");
+            employees();
             break;
         }
         case 2:
         {
             modifyemployees();
+            system("pause");
+            employees();
             break;
         }
-        // case 3:
-        // {
-        //     deleteemployees();
-        //     break;
-        // }
+        case 3:
+        {
+            deleteemployees();
+            system("pause");
+            employees();
+            break;
+        }
         case 4:
         {
             displayemployees();
+            system("pause");
+            employees();
             break;
         }
          case 5:
         {
             taxpayble();
+            system("pause");
+            employees();
             break;
         }
-        // case 6:
-        // {
-        //     GeneratePayrollReport();
-        //     break;
-        // }
-        // case 7:
-        // {
-        //     GeneratePayrollSlip();
-        //     break;
-        // }
+        case 6:
+        {
+            GeneratePayrollReport();
+            system("pause");
+            employees();
+            break;
+        }
+        case 7:
+        {
+            GeneratePayrollSlip();
+            system("pause");
+            employees();
+            break;
+        }
         case 8:
         {
             mainmenu();
             break;
+        }
+        default:
+        {
+            cout<<"Incorrect Choice"<<endl;
+            employees();
         }
     }
 }
@@ -119,6 +142,26 @@ void preloadtest()
         string command = "mkdir " + sources[i] + " > nul 2>&1"; // Redirect output to null device
         system(command.c_str());
     }
+    ifstream fobj;
+    fobj.open(sources[2]+"\\password");
+    if(fobj.is_open())
+    {
+        fobj.close();
+    }
+    else if(!fobj.is_open())
+    {
+        fobj.close();
+        ofstream fobj1;
+        fobj1.open(sources[2]+"\\password");
+        if(fobj1.is_open())
+        {
+            fobj1<<"rohan"<<endl;
+            fobj1<<"admin"<<endl;
+            fobj1<<"shubham"<<endl;
+        }
+        fobj1.close();
+    }
+    fobj.close();
 }
 
 // Function to handle login system
@@ -202,17 +245,30 @@ void mainmenu()
     cout << endl << endl << endl;
     cout << "\t\t\t1)Employees Management" << endl;
     cout << "\t\t\t2)Customers Management" << endl;
-    cout << "\t\t\t3)Exit" << endl;
+    cout << "\t\t\t3)Exit to Desktop" << endl;
     cout << "\t\t\tEnter your choice: ";
     int choice;
     cin >> choice;
     switch (choice) {
         case 1:
+        {
             employees();
-            break;
+        }    break;
         case 2:
+        {    
             customers();
+        }     break;
+        case 3:
+        {
+            cout<<"thanks for using the project!"<<endl;
             break;
+        }
+        default:
+        {
+            cout<<"Incorrect Choice !"<<endl;
+            mainmenu();
+            break;
+        }
     }
 }
 
@@ -364,12 +420,12 @@ class employee
 int employee::next = 23104001+reademployees();
 int main() 
 {
+    preloadtest();
     welcome();
-    //modifyemployees();
-    //displayemployees();
-    //deleteemployees();
-    //displayemployees();
-    taxpayble();
+    if(loginsystem())
+    {
+        mainmenu();
+    }
     return 0;
 }
 
@@ -453,7 +509,7 @@ void displayemployees()
     fobj.open("sources\\employees\\"+temp);
     if(fobj.is_open())
     {   cout<<"Searching!"<<endl;
-        system("timeout /t 2 >null");
+        system("timeout /t 2 /nobreak >null");
         cout<<"Found!\nEmployee Details are:"<<endl;
         string name,depart;
         int age,temp1;
@@ -666,7 +722,43 @@ void taxpayble()
                 tax = 150000 + (salary - 1000000) * 0.3;
         }
         cout<<"Gross Salary : "<<fixed<<setprecision(3)<<grosssalary(salary)<<endl;
-        cout<<"Tax Payable : "<<fixed<<setprecision(3)<<tax;
+        cout<<"Tax Payable : "<<fixed<<setprecision(3)<<tax<<endl;
+    }
+    else if(!fobj.is_open())
+    {
+        system("color 74");
+        cout<<"Incorrect Employee ID"<<endl;
+        system("timeout /t 2 /nobreak >nul");
+    }
+}
+float taxpayble(string temp)
+{
+    ifstream fobj;
+    fobj.open("sources\\employees\\"+temp);
+    float salary;
+    float tax;
+    if(fobj.is_open())
+    {
+        string name,depart;
+        int age,id;
+        getline(fobj,name);
+        fobj>>id;
+        fobj>>age;
+        fobj>>salary;
+        fobj>>depart;
+        if (salary <= 500000) 
+        {
+            tax = 0.1 * salary;
+        }
+        else if (salary > 500000 && salary <= 1000000) 
+        {
+        tax = 50000 + (salary - 500000) * 0.2;
+        }
+        else if (salary > 100000) 
+        {
+                tax = 150000 + (salary - 1000000) * 0.3;
+        }
+        return tax;
     }
     else if(!fobj.is_open())
     {
@@ -685,4 +777,102 @@ float grosssalary(float sal)
     allowances = sal * 0.05;
     net = sal - deductions + allowances;
     return net;
+}
+
+void GeneratePayrollSlip()
+{
+    cout<<"Enter Employee ID: ";
+    int id;
+    cin>>id;
+    ifstream fobj1;
+    fobj1.open("sources\\employees\\"+inttostring(id));
+    string name,depart;
+    int age;
+    float sal;
+    if(fobj1.is_open())
+    {
+        getline(fobj1,name);
+        fobj1>>id;
+        fobj1>>age;
+        fobj1>>sal;
+        fobj1.ignore();
+        getline(fobj1,depart);
+        fobj1.close();
+    }
+    ofstream fobj;
+            string id1 = inttostring(id);
+            string filepath = "sources\\employees\\payroll_slips\\" + id1 + ".txt";
+            fobj.open(filepath);
+            if (fobj.is_open()) {
+                string l = "-------------------------";
+                fobj << "\t\t\t______________________________________\n"
+                    << "\t\t\t|           JAYPEE BANKS             |\n"
+                    << "\t\t\t|____________________________________|\n";
+                fobj << l << endl;
+                fobj << "Payroll Slip" << endl
+                    << l << endl
+                    << "Employee Name: " << name << endl
+                    << "Employee Age: " << age << endl
+                    << "Employee ID: " << id << endl
+                    << "Department: " << depart << endl
+                    << "Gross Salary: " << setprecision(3)<<sal << endl
+                    << l << endl
+                    << "Net Salary: " << setprecision(3)<<grosssalary(sal) << endl
+                    << "Tax Payable: " << setprecision(3)<<taxpayble(inttostring(id)) << endl;
+                fobj<<"-------------------------"<<endl;
+                fobj.close();
+                cout << "Payroll Slip saved to " << filepath << endl;
+                string execute = "notepad.exe " + filepath; // Open generated payroll slip in Notepad
+                system(execute.c_str());
+            }
+            else {
+                system("color 74");
+                cout << "Error in generating payroll slip" << endl;
+            }   
+}
+
+void GeneratePayrollReport()
+{
+    system("cls");
+    cout<<"Enter Employee ID: ";
+    int id;
+    cin>>id;
+    ifstream fobj;
+    fobj.open("sources\\employees\\"+inttostring(id));
+    string name,depart;
+    int age;
+    float sal;
+    if(fobj.is_open())
+    {   
+        getline(fobj,name);
+        fobj>>id;
+        fobj>>age;
+        fobj>>sal;
+        getline(fobj,depart);
+        system("cls");
+        string l = "-------------------------";
+        cout << "\t\t\t______________________________________\n"
+            << "\t\t\t|           JAYPEE BANKS             |\n"
+            << "\t\t\t|____________________________________|\n";
+        cout << l << endl;
+        cout << "Payroll Slip" << endl
+            << l << endl
+            << "Employee Name: " << name << endl
+            << "Employee Age: " << age << endl
+            << "Employee ID: " << id << endl
+            << "Department: " << depart << endl
+            << "Gross Salary: " << sal << endl
+            << l << endl
+            << "Net Salary: " << grosssalary(sal) << endl
+            << "Tax Payable: " << taxpayble(inttostring(id)) << endl;
+        cout<<"-------------------------"<<endl;
+        fobj.close();
+    }
+    else if(!fobj.is_open())
+    {
+        system("color 74");
+        cout<<"Incorrect Employee ID"<<endl;
+        system("timeout /t 2 >null");
+        system("color 71");
+    }
 }
