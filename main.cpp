@@ -34,7 +34,8 @@ float taxpayble(string temp);
 void GeneratePayrollReport();
 void GeneratePayrollSlip();
 float newgetdatafloat();
- 
+void branchcodes();
+int readcustomers();
 
 //class prototypes
 class employee;
@@ -416,25 +417,105 @@ class employee
 
 };
 
-//Employee class static int variable next defined
-int employee::next = 23104001+reademployees();
-int main() 
+//CUSTOMERS class defined
+class customer
 {
-    preloadtest();
-    welcome();
-    if(loginsystem())
-    {
-        mainmenu();
-    }
-    return 0;
-}
-
+    private:
+        string name;
+        string address;
+        string branchCode;
+        long long int mobileNumber;
+        float balance;
+        long long int accountNumber;
+        string accountType;
+        string dateOfBirth;
+        string emailAddress;
+        string kycDocuments[2];
+    public:
+        static int next;
+        customer(){}
+        customer(customer &obj)
+        {
+            this->name=obj.name;
+            this->address=obj.address;
+            this->branchCode=obj.branchCode;
+            this->mobileNumber=obj.mobileNumber;
+            this->balance=obj.balance;
+            this->accountNumber=obj.accountNumber;
+            this->accountType=obj.accountType;
+            this->dateOfBirth=obj.dateOfBirth;
+            this->emailAddress=obj.emailAddress;
+            this->kycDocuments[0]=obj.kycDocuments[0];
+            this->kycDocuments[1]=obj.kycDocuments[1];   
+        }
+        customer(string n,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
+        {
+            name=n;
+            address=add;
+            branchCode=branch;
+            mobileNumber=mob;
+            balance=bal;
+            accountNumber=next++;
+            accountType=acctype;
+            dateOfBirth=dob;
+            emailAddress=email;
+            for(int i=0;i<2;i++)
+            {
+                kycDocuments[i]=kyc[i];
+            }
+            cout<<"Account Number generated: "<<accountNumber<<endl;
+        }
+        customer loaddata()
+        {
+            customer loaded;
+            ifstream fobj;
+            fobj.open("sources\\customers\\"+inttostring(accountNumber));
+            if(fobj.is_open())
+            {
+                getline(fobj,loaded.name);
+                getline(fobj,loaded.address);
+                getline(fobj,loaded.branchCode);
+                fobj>>loaded.mobileNumber;
+                fobj>>loaded.balance;
+                fobj>>loaded.accountNumber;
+                fobj.ignore();
+                getline(fobj,loaded.accountType);
+                getline(fobj,loaded.dateOfBirth);
+                getline(fobj,loaded.emailAddress);
+                getline(fobj,loaded.kycDocuments[0]);
+                getline(fobj,loaded.kycDocuments[1]);
+            }
+            fobj.close();
+            return loaded;
+        }
+        void savedata()
+        {
+            ofstream fobj;
+            fobj.open("sources\\customers\\"+inttostring(accountNumber));
+            if(fobj.is_open())
+            {
+                fobj<<name<<endl
+                    <<address<<endl
+                    <<branchCode<<endl
+                    <<mobileNumber<<endl
+                    <<balance<<endl
+                    <<accountNumber<<endl
+                    <<accountType<<endl
+                    <<dateOfBirth<<endl
+                    <<emailAddress<<endl
+                    <<kycDocuments[0]<<endl
+                    <<kycDocuments[1]<<endl;
+            }
+            fobj.close();
+        }
+};
 
 //incrementemployees function
 void incrementemployees()
 {
     ifstream file;
     int count;
+
     file.open("sources\\employees\\!");
     if(file.is_open())
     {
@@ -446,6 +527,7 @@ void incrementemployees()
         if(f.is_open())
         {
             f<<count;
+            f.close();
         }
     }
 }
@@ -731,6 +813,7 @@ void taxpayble()
         system("timeout /t 2 /nobreak >nul");
     }
 }
+
 float taxpayble(string temp)
 {
     ifstream fobj;
@@ -876,3 +959,53 @@ void GeneratePayrollReport()
         system("color 71");
     }
 }
+
+void branchcodes()
+{
+    cout<<"Noida Sector 62, Uttar Pradesh:"<<"JPBN62UP"<<endl;
+    cout<<"Noida Sector 128, Uttar Pradesh:"<<"JBPN128UP"<<endl;
+    cout<<"Guna, Madhya Pradesh: "<<"JPBGMMP"<<endl;
+    cout<<"Solan, Himachal Pradesh:"<<"JPBHSHP"<<endl;
+}
+
+int readcustomers()
+{
+    string fpath="sources\\customers\\!";
+    ifstream file;
+    int read;
+    file.open(fpath);
+    if(file.is_open())
+    {
+        file>>read;
+        file.close();
+    }
+    else
+    {
+        ofstream file;
+        file.open(fpath);
+        if(file.is_open())
+        {
+            read=0;
+            file<<read;
+        }
+        file.close();
+    }
+    return read;
+}
+
+//Employee class static int variable next defined
+int employee::next = 23104001+reademployees();
+int customer::next=1+readcustomers();
+int main() 
+{
+    preloadtest();
+    welcome();
+    string kyc[]={"aadhar","241206601645"};
+    if(loginsystem())
+    {
+
+    }
+    
+    return 0;
+}
+
