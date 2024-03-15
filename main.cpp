@@ -36,6 +36,16 @@ void GeneratePayrollSlip();
 float newgetdatafloat();
 void branchcodes();
 int readcustomers();
+void display_customers();
+void addcustomer();
+void modifycusotmer(){}
+void deletecustomer(){}
+void changebranch(){}
+void generatepassbook(){}
+void depositmoney(){}
+void withrawmoney(){}
+string getdob();
+string getbranch(int a);
 
 //class prototypes
 class employee;
@@ -125,9 +135,86 @@ void employees()
 //cusotmers function
 void customers() 
 {
-    cout << "Customers management function called." << endl;
+    int choice;
+    system("cls");
+    cout << "\t\t\t            JAYPEE BANKS              \n";
+    // cout << "Customers management function called." << endl;
+    cout<<"1) Add Customer"<<endl
+        <<"2) Modify Customer"<<endl
+        <<"3) Delete Customer"<<endl
+        <<"4) Change Branch"<<endl
+        <<"5) Generate Passbook"<<endl
+        <<"6) Display Data"<<endl
+        <<"7) Deposit Money"<<endl
+        <<"8) Withdraw Money"<<endl
+        <<"9) Exit to previous menu"<<endl
+        <<"Enter you choice: ";
+    cin>>choice;
+    switch (choice)
+    {
+        case 1:
+        {
+            addcustomer();
+            customers();
+            break;
+        }
+        case 2:
+        {
+            modifycusotmer();
+            customers();
+            break;
+        }
+        case 3:
+        {
+            deletecustomer();
+            customers();
+            break;
+        }
+        case 4:
+        {
+            changebranch();
+            customers();
+            break;
+        }
+        case 5:
+        {
+            generatepassbook();
+            customers();
+            break;
+        }
+        case 6:
+        {
+            display_customers();
+            customers();
+            break;
+        }
+        case 7:
+        {
+            depositmoney();
+            customers();
+            break;
+        }
+        case 8:
+        {
+            withrawmoney();
+            customers();
+            break;
+        }
+        case 9:
+        {
+            mainmenu();
+            break;
+        }
+        default:
+        {
+            system("color 74");
+            cout<<"Incorrect Choice !"<<endl;
+            system("timeout /t 2 /nobreak >null");
+            customers();
+            break;
+        }
+    }
 }
-
 // Function to create necessary directories
 void preloadtest() 
 {
@@ -509,6 +596,58 @@ class customer
             fobj.close();
         }
 };
+
+void display_customers()
+{
+    int accno;
+    cout<<"Enter Account Number: "<<accno;
+    ifstream fobj;
+    fobj.open("sources\\customers\\"+inttostring(accno));
+    string name;
+    string address;
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    if(fobj.is_open())
+    {
+        int accountNumber;
+        getline(fobj,name);
+        getline(fobj,address);
+        getline(fobj,branchCode);
+        fobj>>mobileNumber;
+        fobj>>balance;
+        fobj>>accountNumber;
+        fobj.ignore();
+        getline(fobj,accountType);
+        getline(fobj,dateOfBirth);
+        getline(fobj,emailAddress);
+        getline(fobj,kycDocuments[0]);
+        getline(fobj,kycDocuments[1]);
+        fobj.close();
+        cout<<"Cusotmer details are:-"<<endl
+            <<"Name: "<<name<<endl
+            <<"Account Number: "<<accno<<endl
+            <<"Account Type: "<<accountType<<endl
+            <<"Account Balance: "<<balance<<endl
+            <<"Address: "<<address<<endl
+            <<"Date of Birth: "<<dateOfBirth<<endl
+            <<"Mobile Number: "<<mobileNumber<<endl
+            <<"Email Address: "<<emailAddress<<endl
+            <<"KYC document: "<<kycDocuments[0]<<" authentication number: "<<kycDocuments[1]<<endl;
+    }
+    else
+    {
+        fobj.close();
+        system("color 74");
+        cout<<"Incorrect Employee ID !"<<endl;
+        system("timout /t 2 /nobreak >null");
+        system("color 71");
+    }
+}
 
 //incrementemployees function
 void incrementemployees()
@@ -993,19 +1132,88 @@ int readcustomers()
     return read;
 }
 
+void addcustomer()
+{
+    string name;//
+    string address;//
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    long long int accountNumber;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    cout<<"Enter Cusotmer Details:- "<<endl;
+    cout<<"Name: ";
+    getline(cin,name);
+    cout<<"Address: ";
+    getline(cin,address);
+    cout<<"Date Of Birth: ";
+    dateOfBirth=getdob();
+    cout<<"Mobile Number: ";
+    cin>>mobileNumber;
+    cout<<"Balance: ";
+    cin>>balance;
+    cout<<"Account Type: ";
+    cin>>accountType;
+    cout<<"Email Address: ";
+    cin>>emailAddress;
+    cout<<"Enter KYC Document: ";
+    cin>>kycDocuments[0];
+    cout<<"Enter "<<kycDocuments[0]<<" number: ";
+    cin>>kycDocuments[1];
+    branchCode=getbranch(0);
+}
+
+string getdob()
+{
+    int count = 1;
+    string dob;
+    char c;
+    while (count <= 8)
+    {
+        c = getch();
+        if (c != 13)
+        {
+            if (count == 3 || count == 5)
+            {
+                dob = dob + ".";
+                cout << ".";
+            }
+            dob = dob + c;
+            cout << c;
+            count++;
+        }
+    }
+    cout<<endl;
+    return dob;
+}
+
+string getbranch(int a)
+{
+    string branch[]={"JPBN62UP","JBPN128UP","JPBGMMP","JPBHSHP"};
+    for(int i=0;i<4;i++)
+    {
+        if(i==a)
+        {
+            return branch[i];
+        }
+    }
+}
+
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
+//Customer class static int variable next defined
 int customer::next=1+readcustomers();
 int main() 
 {
     preloadtest();
     welcome();
-    string kyc[]={"aadhar","241206601645"};
     if(loginsystem())
     {
 
     }
-    
     return 0;
 }
 
