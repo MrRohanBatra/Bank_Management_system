@@ -7,11 +7,13 @@
 #include<iomanip>
 #include<sstream>
 #include<conio.h>
+#include<limits>
 
 using namespace std;
 
 // Function prototypes
 int newgetdataint();
+long long int newgetdatalint();
 void welcome();
 void employees();
 void customers();
@@ -21,6 +23,7 @@ bool loginsystem();
 string getpass();
 string inttostring(int num);
 string newgetdata();
+string toLowercase(const string& str);
 int reademployees();
 float grosssalary(float sal);
 void incrementemployees();
@@ -38,7 +41,7 @@ void branchcodes();
 int readcustomers();
 void display_customers();
 void addcustomer();
-void modifycusotmer(){}
+void modifycustomer();
 void deletecustomer(){}
 void changebranch(){}
 void generatepassbook(){}
@@ -160,7 +163,7 @@ void customers()
         }
         case 2:
         {
-            modifycusotmer();
+            modifycustomer();
             customers();
             break;
         }
@@ -552,6 +555,23 @@ class customer
             }
             cout<<"Account Number generated: "<<accountNumber<<endl;
         }
+        void getcustomer(string n,long long int accno,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
+        {
+            name=n;
+            accountNumber=accno;
+            address=add;
+            branchCode=branch;
+            mobileNumber=mob;
+            balance=bal;
+            accountNumber=next++;
+            accountType=acctype;
+            dateOfBirth=dob;
+            emailAddress=email;
+            for(int i=0;i<2;i++)
+            {
+                kycDocuments[i]=kyc[i];
+            }
+        }
         customer loaddata()
         {
             customer loaded;
@@ -832,6 +852,99 @@ void modifyemployees() {
     system("color 71");
 }
 
+void modifycustomer()
+{
+    system("cls");
+    string name;
+    string address;
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    long long int accountNumber;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    cout << "Enter Account Number: ";
+    cin>>accountNumber;
+    ifstream fobj;
+    fobj.open("sources\\customers\\" + inttostring(accountNumber));
+    if (fobj.is_open()) 
+    {
+        getline(fobj,name);//
+        getline(fobj,address);//
+        getline(fobj,branchCode);//
+        fobj>>mobileNumber;//
+        fobj>>balance;//
+        fobj>>accountNumber;//
+        fobj.ignore();
+        getline(fobj,accountType);//
+        getline(fobj,dateOfBirth);//
+        getline(fobj,emailAddress);//
+        getline(fobj,kycDocuments[0]);//
+        getline(fobj,kycDocuments[1]);//
+        fobj.close();
+        string new_name;
+        string new_address;
+        string new_branchCode;
+        long long int new_mobileNumber;
+        float new_balance;
+        long long int new_accountNumber;
+        string new_accountType;
+        string new_dateOfBirth;
+        string new_emailAddress;
+        string new_kycDocuments[2];
+        cout << "********************************************************************" << endl;
+        cout << "Modify Customer details leave blank for no updation just press enter" << endl;
+        cout << "********************************************************************" << endl;
+        cout << "Account Number: " << accountNumber << "    it can be modified " << endl;
+        new_accountNumber=accountNumber;
+        cout << "Name: " << name << "    ";
+        new_name = newgetdata();
+        cout << "Branch: " << branchCode  << "    use CHANGE BRANCH OPTION from mainmenu" << endl;
+        new_branchCode=branchCode;
+        cout<< "Address: "<<address<<"    ";
+        new_address=newgetdata();
+        cout << "Mobile Number: " << mobileNumber << "    ";
+        cin.ignore();
+        new_mobileNumber = newgetdatalint();
+        cout << "Balance: " << balance << "    use DEPOSIT and WITHRAW option from the mainmenu"<<endl;
+        new_balance=balance;
+        cout << "Account Type: " << accountType << "    ";
+        new_accountType = newgetdata();
+        cout<<"Date Of Birth: "<<dateOfBirth<<"    ";
+        new_dateOfBirth=getdob();
+        cout<<"Email Address: "<<emailAddress<<"    ";
+        new_emailAddress=newgetdata();
+        cout<<"Kyc Document: "<<kycDocuments[0]<<"    ";
+        new_kycDocuments[0]=newgetdata();
+        if(toLowercase(new_kycDocuments[0])!=toLowercase(kycDocuments[0]))
+        {
+            cout<<kycDocuments[0]<<" number: "<<kycDocuments[1]<<"    "<<new_kycDocuments[0]<<" number: ";
+            new_kycDocuments[1]=newgetdata();
+        }
+        cout << "********************************************************************" << endl;
+        string confirmation;
+        cout << "Are you sure you want to modify the original data? (yes/no): ";
+        cin >> confirmation;
+        if(toLowercase(confirmation)=="yes" || toLowercase(confirmation)=="y")
+        {
+            customer temp;
+            temp.getcustomer(new_name,new_accountNumber,new_address,new_branchCode,new_mobileNumber,new_balance,new_accountType,new_dateOfBirth,new_emailAddress,new_kycDocuments);
+            temp.savedata();
+            cout << "********************************************************************" << endl;
+            cout << "Data Modified!" << endl;
+            cout << "********************************************************************" << endl;   
+        }
+        else
+        {
+            cout << "********************************************************************" << endl;
+            cout << "Data NOT Modified!" << endl;
+            cout << "********************************************************************" << endl;   
+        }
+    }
+    system("timeout /t 2 /nobreak >null");
+}
 
 string newgetdata()
 {
@@ -866,6 +979,27 @@ int newgetdataint()
     cout<<endl;
     // Convert the character to integer and return it
     return stoi(number);
+}
+
+long long int newgetdatalint() {
+    string number;
+    char ch;
+    while (true) {
+        ch = getchar(); // Read a character from standard input
+        if (ch == '\n') // Exit the loop if Enter key is pressed
+            break;
+        else if (ch == '\b') { // Handle backspace
+            if (!number.empty()) {
+                cout << "\b \b"; // Move cursor back, erase character, move cursor back again
+                number.pop_back(); // Remove last character from string
+            }
+        }
+        else if (isdigit(ch)) {
+            number += ch; // Append character to string
+        }
+    }
+    //cout << endl; // Print newline after user presses Enter
+    return stoll(number); // Convert the string to long long integer and return it
 }
 
 float newgetdatafloat() 
@@ -1134,8 +1268,8 @@ int readcustomers()
 
 void addcustomer()
 {
-    string name;//
-    string address;//
+    string name;
+    string address;
     string branchCode;
     long long int mobileNumber;
     float balance;
@@ -1202,6 +1336,17 @@ string getbranch(int a)
     }
 }
 
+string toLowercase(const string& str) {
+    string result = str; // Make a copy of the input string
+    
+    // Loop through each character and convert to lowercase
+    for (int i = 0; i < result.size(); ++i) {
+        result[i] = tolower(result[i]); // Convert character to lowercase
+    }
+    
+    return result;
+}
+
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
 //Customer class static int variable next defined
@@ -1212,7 +1357,7 @@ int main()
     welcome();
     if(loginsystem())
     {
-
+        modifycustomer();
     }
     return 0;
 }
