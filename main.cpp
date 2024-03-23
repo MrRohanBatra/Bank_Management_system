@@ -27,6 +27,7 @@ string toLowercase(const string& str);
 int reademployees();
 float grosssalary(float sal);
 void incrementemployees();
+void incrementcustomers();
 void addemployees();
 void modifyemployees();
 void deleteemployees();
@@ -42,9 +43,9 @@ int readcustomers();
 void display_customers();
 void addcustomer();
 void modifycustomer();
-void deletecustomer(){}
-void changebranch(){}
-void generatepassbook(){}
+void deletecustomer();
+void changebranch();
+void generatepassbook();
 void depositmoney(){}
 void withrawmoney(){}
 string getdob();
@@ -212,7 +213,8 @@ void customers()
         {
             system("color 74");
             cout<<"Incorrect Choice !"<<endl;
-            system("timeout /t 2 /nobreak >null");
+            system("timeout /t 1 /nobreak >null");
+            system("color 71");
             customers();
             break;
         }
@@ -221,15 +223,15 @@ void customers()
 // Function to create necessary directories
 void preloadtest() 
 {
-    std::string sources[4];
+    std::string sources[5];
     // Define directory paths
     sources[3] = "sources\\employees\\payroll_slips";
     sources[0] = "sources\\customers";
     sources[1] = "sources\\employees";
     sources[2] = "sources\\password";
-
+    sources[4] = "sources\\customers\\passbooks";
     // Create directories
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         string command = "mkdir " + sources[i] + " > nul 2>&1"; // Redirect output to null device
         system(command.c_str());
     }
@@ -669,7 +671,6 @@ void display_customers()
     }
 }
 
-//incrementemployees function
 void incrementemployees()
 {
     ifstream file;
@@ -683,6 +684,26 @@ void incrementemployees()
         file.close();
         ofstream f;
         f.open("sources\\employees\\!");
+        if(f.is_open())
+        {
+            f<<count;
+            f.close();
+        }
+    }
+}
+
+void incrementcustomers()
+{
+    ifstream file;
+    int count;
+    file.open("sources\\customers\\!");
+    if(file.is_open())
+    {
+        file>>count;
+        count++;
+        file.close();
+        ofstream f;
+        f.open("sources\\customers\\!");
         if(f.is_open())
         {
             f<<count;
@@ -1039,6 +1060,34 @@ void deleteemployees()
     {
         system("color 74");
         cout<<"Employee ID not found"<<endl;
+        system("timeout /t 1 /nobreak >nul");
+        system("color 71");
+    }
+    fobj.close();
+}
+
+void deletecustomer()
+{  system("color 71");
+    string temp;
+    cout<<"Enter Account Number: ";
+    cin>>temp;
+    ifstream fobj;
+    cout<<"Searching"<<endl;
+    fobj.open("sources\\customers\\"+temp);
+    system("timeout /t 1 /nobreak >nul");
+    if(fobj.is_open())
+    {
+        fobj.close();
+        string execute="cmd /c del sources\\customers\\"+temp;
+        system(execute.c_str());
+        cout<<"Customer Data Successfully Deleted"<<endl;
+    }
+    else
+    {
+        system("color 74");
+        cout<<"Customer not found"<<endl;
+        system("timeout /t 1 /nobreak >nul");
+        system("color 71");
     }
     fobj.close();
 }
@@ -1184,6 +1233,8 @@ void GeneratePayrollSlip()
             else {
                 system("color 74");
                 cout << "Error in generating payroll slip" << endl;
+                system("timeout /t 1 /nobreak >null");
+                system("color 71");
             }   
 }
 
@@ -1235,10 +1286,10 @@ void GeneratePayrollReport()
 
 void branchcodes()
 {
-    cout<<"Noida Sector 62, Uttar Pradesh:"<<"JPBN62UP"<<endl;
-    cout<<"Noida Sector 128, Uttar Pradesh:"<<"JBPN128UP"<<endl;
-    cout<<"Guna, Madhya Pradesh: "<<"JPBGMMP"<<endl;
-    cout<<"Solan, Himachal Pradesh:"<<"JPBHSHP"<<endl;
+    cout<<"1) Noida Sector 62, Uttar Pradesh:"<<"JPBN62UP"<<endl;
+    cout<<"2) Noida Sector 128, Uttar Pradesh:"<<"JBPN128UP"<<endl;
+    cout<<"3) Guna, Madhya Pradesh: "<<"JPBGMMP"<<endl;
+    cout<<"4) Solan, Himachal Pradesh:"<<"JPBHSHP"<<endl;
 }
 
 int readcustomers()
@@ -1298,6 +1349,9 @@ void addcustomer()
     cout<<"Enter "<<kycDocuments[0]<<" number: ";
     cin>>kycDocuments[1];
     branchCode=getbranch(0);
+    customer temp(name,address,branchCode,mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
+    temp.savedata();
+    incrementcustomers();
 }
 
 string getdob()
@@ -1347,6 +1401,124 @@ string toLowercase(const string& str) {
     return result;
 }
 
+void changebranch()
+{
+    int accno;
+    cout<<"Enter Account Number: ";
+    cin>>accno;
+    ifstream fobj;
+    fobj.open("sources\\customers\\"+inttostring(accno));
+    string name;
+    string address;
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    if(fobj.is_open())
+    {
+        int accountNumber;
+        getline(fobj,name);
+        getline(fobj,address);
+        getline(fobj,branchCode);
+        fobj>>mobileNumber;
+        fobj>>balance;
+        fobj>>accountNumber;
+        fobj.ignore();
+        getline(fobj,accountType);
+        getline(fobj,dateOfBirth);
+        getline(fobj,emailAddress);
+        getline(fobj,kycDocuments[0]);
+        getline(fobj,kycDocuments[1]);
+        fobj.close();
+        cout<<"Availabe Branches"<<endl;
+        branchcodes();
+        cout<<"Enter your choice: ";
+        int t;
+        cin>>t;
+        customer temp;
+        temp.getcustomer(name,accountNumber,address,getbranch(t),mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
+        cout<<"Branch changed"<<endl;
+        system("timout /t 1 /nobreak >null");
+        temp.savedata();
+    }
+    else if(!fobj.is_open())
+    {
+        system("color 74");
+        cout<<"Incorrect account number "<<endl;
+        system("timeout /t 1 /nobreak >null");
+        system("color 71");
+    }
+}
+
+void generatepassbook()
+{
+{
+    int accno;
+    cout<<"Enter Account Number: ";
+    cin>>accno;
+    ifstream fobj;
+    fobj.open("sources\\customers\\"+inttostring(accno));
+    string name;
+    string address;
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    if(fobj.is_open())
+    {
+        int accountNumber;
+        getline(fobj,name);
+        getline(fobj,address);
+        getline(fobj,branchCode);
+        fobj>>mobileNumber;
+        fobj>>balance;
+        fobj>>accountNumber;
+        fobj.ignore();
+        getline(fobj,accountType);
+        getline(fobj,dateOfBirth);
+        getline(fobj,emailAddress);
+        getline(fobj,kycDocuments[0]);
+        getline(fobj,kycDocuments[1]);
+        fobj.close();
+        ofstream fobj;
+        string filepath = "sources\\customers\\passbooks\\" + inttostring(accountNumber) + ".txt";
+        fobj.open(filepath);
+        string l = "-------------------------";
+        fobj <<"\t\t\t______________________________________\n"
+            << "\t\t\t|           JAYPEE BANKS             |\n"
+            << "\t\t\t|____________________________________|\n";
+        fobj << l << endl;
+        fobj << "Passbook " << endl;
+        fobj<<"Cusotmer details are:-"<<endl
+            <<"Name: "<<name<<endl
+            <<"Account Number: "<<accno<<endl
+            <<"Account Type: "<<accountType<<endl
+            <<"Account Balance: "<<balance<<endl
+            <<"Address: "<<address<<endl
+            <<"Date of Birth: "<<dateOfBirth<<endl
+            <<"Mobile Number: "<<mobileNumber<<endl
+            <<"Email Address: "<<emailAddress<<endl
+            <<"KYC document: "<<kycDocuments[0]<<endl<<"authentication number: "<<kycDocuments[1]<<endl;
+        string file="notepad sources\\customers\\passbooks\\"+inttostring(accno)+".txt";
+        system(file.c_str());
+    }
+    else
+    {
+        fobj.close();
+        system("color 74");
+        cout<<"Incorrect Account Number !"<<endl;
+        system("timout /t 2 /nobreak >null");
+        system("color 71");
+    }
+}
+}
+
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
 //Customer class static int variable next defined
@@ -1357,7 +1529,7 @@ int main()
     welcome();
     if(loginsystem())
     {
-        modifycustomer();
+        mainmenu();
     }
     return 0;
 }

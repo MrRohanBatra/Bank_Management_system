@@ -1,0 +1,16 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Passbook 
+Cusotmer details are:-
+Name: test
+Account Number: 1
+Account Type: current
+Account Balance: 326743
+Address: pwti
+Date of Birth: at.rb.rfae
+Mobile Number: 23490754
+Email Address: 3456fafbv
+KYC document: 4521
+ authentication number: 1145652
