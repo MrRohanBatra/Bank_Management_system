@@ -1,0 +1,16 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Passbook 
+Cusotmer details are:-
+Name: rohan batra
+Account Number: 2
+Account Type: saving
+Account Balance: 326743
+Address: a2054
+Date of Birth: 16.07.2005
+Mobile Number: 9818888495
+Email Address: rohanbatra@mail.com
+KYC document: aadhar
+authentication number: 241206601645
