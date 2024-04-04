@@ -339,6 +339,7 @@ void mainmenu()
     cout << "\t\t\t1)Employees Management" << endl;
     cout << "\t\t\t2)Customers Management" << endl;
     cout << "\t\t\t3)Exit to Desktop" << endl;
+    cout<<  "\t\t\t4)Shutdown PC" <<endl;
     cout << "\t\t\tEnter your choice: ";
     int choice;
     cin >> choice;
@@ -355,6 +356,12 @@ void mainmenu()
         {
             cout<<"thanks for using the project!"<<endl;
             break;
+        }
+        case 4:
+        {
+            cout<<"thanks for using the project!"<<endl;
+            system("shutdown /s /t 5");
+            break;   
         }
         default:
         {
@@ -1533,4 +1540,3 @@ int main()
     }
     return 0;
 }
-
