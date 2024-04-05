@@ -1,0 +1,16 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Passbook 
+Cusotmer details are:-
+Name: poonam batra
+Account Number: 7
+Account Type: savings
+Account Balance: 18910
+Address: test
+Date of Birth: 03.07.1979
+Mobile Number: 9818002047
+Email Address: p@GMAIL.COm
+KYC document: test
+authentication number: test123

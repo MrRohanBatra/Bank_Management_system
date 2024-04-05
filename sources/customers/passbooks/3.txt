@@ -1,0 +1,16 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Passbook 
+Cusotmer details are:-
+Name: rohan test mode is on 
+Account Number: 3
+Account Type: 3
+Account Balance: 16555.8
+Address: at home 
+Date of Birth: current
+Mobile Number: 98188884955
+Email Address: 16.07.2005
+KYC document: hubpanda08@gmail.com
+authentication number: epic games

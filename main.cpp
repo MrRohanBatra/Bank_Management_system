@@ -46,8 +46,9 @@ void modifycustomer();
 void deletecustomer();
 void changebranch();
 void generatepassbook();
+void generatepassbook(int);
 void depositmoney();
-void withrawmoney(){}
+void withrawmoney();
 string getdob();
 string getbranch(int a);
 
@@ -564,6 +565,24 @@ class customer
             }
             cout<<"Account Number generated: "<<accountNumber<<endl;
         }
+        customer(string n,long long int accno,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
+        {
+            name=n;
+            accountNumber=accno;
+            address=add;
+            branchCode=branch;
+            mobileNumber=mob;
+            balance=bal;
+            accountNumber=accno;
+            accountType=acctype;
+            dateOfBirth=dob;
+            emailAddress=email;
+            for(int i=0;i<2;i++)
+            {
+                kycDocuments[i]=kyc[i];
+            }
+        }
+        
         void getcustomer(string n,long long int accno,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
         {
             name=n;
@@ -581,6 +600,7 @@ class customer
                 kycDocuments[i]=kyc[i];
             }
         }
+        
         customer loaddata()
         {
             customer loaded;
@@ -624,10 +644,10 @@ class customer
             }
             fobj.close();
         }
-        void updatepass()
+        void updatepass(long long int accno)
         {
             ofstream fobj;
-            fobj.open("sources\\customers\\"+inttostring(accountNumber));
+            fobj.open("sources\\customers\\passbooks\\"+inttostring(accno)+".txt");
             if(fobj.is_open())
             {
                 string l = "-------------------------";
@@ -635,7 +655,7 @@ class customer
             << "\t\t\t|           JAYPEE BANKS             |\n"
             << "\t\t\t|____________________________________|\n";
         fobj << l << endl;
-        fobj << "Passbook " << endl;
+        fobj << "Passbook " << endl<<l<<endl;
         fobj<<"Cusotmer details are:-"<<endl
             <<"Name: "<<name<<endl
             <<"Account Number: "<<accountNumber<<endl
@@ -648,13 +668,15 @@ class customer
             <<"KYC document: "<<kycDocuments[0]<<endl<<"authentication number: "<<kycDocuments[1]<<endl;
             }
             fobj.close();
+            savedata();
         }
 };
 
 void display_customers()
 {
     int accno;
-    cout<<"Enter Account Number: "<<accno;
+    cout<<"Enter Account Number: ";
+    cin>>accno;
     ifstream fobj;
     fobj.open("sources\\customers\\"+inttostring(accno));
     string name;
@@ -692,6 +714,7 @@ void display_customers()
             <<"Mobile Number: "<<mobileNumber<<endl
             <<"Email Address: "<<emailAddress<<endl
             <<"KYC document: "<<kycDocuments[0]<<" authentication number: "<<kycDocuments[1]<<endl;
+        system("pause");
     }
     else
     {
@@ -982,8 +1005,7 @@ void modifycustomer()
         cin >> confirmation;
         if(toLowercase(confirmation)=="yes" || toLowercase(confirmation)=="y")
         {
-            customer temp;
-            temp.getcustomer(new_name,new_accountNumber,new_address,new_branchCode,new_mobileNumber,new_balance,new_accountType,new_dateOfBirth,new_emailAddress,new_kycDocuments);
+            customer temp(new_name,new_accountNumber,new_address,new_branchCode,new_mobileNumber,new_balance,new_accountType,new_dateOfBirth,new_emailAddress,new_kycDocuments);
             temp.savedata();
             cout << "********************************************************************" << endl;
             cout << "Data Modified!" << endl;
@@ -1335,15 +1357,16 @@ int readcustomers()
         file>>read;
         file.close();
     }
-    else
+    else if(!file.is_open())
     {
-        ofstream file;
-        file.open(fpath);
-        if(file.is_open())
+        ofstream fobj;
+        fobj.open(fpath);
+        if(fobj.is_open())
         {
             read=0;
-            file<<read;
+            fobj<<read;
         }
+        fobj.close();
         file.close();
     }
     return read;
@@ -1385,6 +1408,7 @@ void addcustomer()
     customer temp(name,address,branchCode,mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
     temp.savedata();
     incrementcustomers();
+    system("pause");
 }
 
 string getdob()
@@ -1471,8 +1495,7 @@ void changebranch()
         cout<<"Enter your choice: ";
         int t;
         cin>>t;
-        customer temp;
-        temp.getcustomer(name,accountNumber,address,getbranch(t),mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
+        customer temp(name,accountNumber,address,getbranch(t),mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
         cout<<"Branch changed"<<endl;
         system("timout /t 1 /nobreak >null");
         temp.savedata();
@@ -1552,6 +1575,65 @@ void generatepassbook()
 }
 }
 
+void generatepassbook(int accno)
+{
+    ifstream fobj;
+    fobj.open("sources\\customers\\"+inttostring(accno));
+    string name;
+    string address;
+    string branchCode;
+    long long int mobileNumber;
+    float balance;
+    string accountType;
+    string dateOfBirth;
+    string emailAddress;
+    string kycDocuments[2];
+    if(fobj.is_open())
+    {
+        int accountNumber;
+        getline(fobj,name);
+        getline(fobj,address);
+        getline(fobj,branchCode);
+        fobj>>mobileNumber;
+        fobj>>balance;
+        fobj>>accountNumber;
+        fobj.ignore();
+        getline(fobj,accountType);
+        getline(fobj,dateOfBirth);
+        getline(fobj,emailAddress);
+        getline(fobj,kycDocuments[0]);
+        getline(fobj,kycDocuments[1]);
+        fobj.close();
+        ofstream fobj;
+        string filepath = "sources\\customers\\passbooks\\" + inttostring(accountNumber) + ".txt";
+        fobj.open(filepath);
+        string l = "-------------------------";
+        fobj <<"\t\t\t______________________________________\n"
+            << "\t\t\t|           JAYPEE BANKS             |\n"
+            << "\t\t\t|____________________________________|\n";
+        fobj << l << endl;
+        fobj << "Passbook " << endl;
+        fobj<<"Cusotmer details are:-"<<endl
+            <<"Name: "<<name<<endl
+            <<"Account Number: "<<accno<<endl
+            <<"Account Type: "<<accountType<<endl
+            <<"Account Balance: "<<balance<<endl
+            <<"Address: "<<address<<endl
+            <<"Date of Birth: "<<dateOfBirth<<endl
+            <<"Mobile Number: "<<mobileNumber<<endl
+            <<"Email Address: "<<emailAddress<<endl
+            <<"KYC document: "<<kycDocuments[0]<<endl<<"authentication number: "<<kycDocuments[1]<<endl;
+    }
+    else
+    {
+        fobj.close();
+        system("color 74");
+        cout<<"Incorrect Account Number !"<<endl;
+        system("timout /t 2 /nobreak >null");
+        system("color 71");
+    }
+}
+
 void depositmoney()
 {
     cout<<"Enter Account Number: ";
@@ -1571,13 +1653,13 @@ void depositmoney()
     string emailAddress;
     string kycDocuments[2];
     cout<<"Searching !"<<endl;
-    system("timout /t 2 /nobreak >null");
+    system("timeout /t 2 /nobreak >null");
     if(fobj.is_open())
     {
         cout<<"Found!"<<endl;
         cout<<"Enter Amount to Deposit: ";
-        float deposit;
-        cin>>deposit;
+        float depo;
+        cin>>depo;
         getline(fobj,name);
         getline(fobj,address);
         getline(fobj,branchCode);
@@ -1591,11 +1673,35 @@ void depositmoney()
         getline(fobj,kycDocuments[0]);
         getline(fobj,kycDocuments[1]);
         fobj.close();
-        customer temp;
-        balance=balance+deposit;
-        temp.getcustomer(name,accountNumber,address,branchCode,mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
-        temp.savedata();
-        temp.updatepass();
+/*        
+            cout<<"Cusotmer details are:-"<<endl
+            <<"Name: "<<name<<endl
+            <<"Account Number: "<<accno<<endl
+            <<"Account Type: "<<accountType<<endl
+            <<"Account Balance: "<<balance<<endl
+            <<"Address: "<<address<<endl
+            <<"Date of Birth: "<<dateOfBirth<<endl
+            <<"Mobile Number: "<<mobileNumber<<endl
+            <<"Email Address: "<<emailAddress<<endl
+            <<"KYC document: "<<kycDocuments[0]<<" authentication number: "<<kycDocuments[1]<<endl;*/
+        cout<<"current Balance: "<<balance<<endl;
+        balance=balance+depo;
+        cout<<"Update balance: "<<balance<<endl;
+        ofstream file;
+        file.open(t.c_str()+accno);
+        file<<name<<endl
+            <<address<<endl
+            <<branchCode<<endl
+            <<mobileNumber<<endl
+            <<balance<<endl
+            <<accountNumber<<endl
+            <<accountType<<endl
+            <<dateOfBirth<<endl
+            <<emailAddress<<endl
+            <<kycDocuments[0]<<endl
+            <<kycDocuments[1]<<endl;
+        generatepassbook(accountNumber);
+        system("pause");
     }
     else if(!fobj.is_open())
     {
@@ -1606,7 +1712,7 @@ void depositmoney()
     }
 }
 
-void withdraw()
+void withrawmoney()
 {
     cout<<"Enter Account Number: ";
     string accno;
@@ -1625,7 +1731,7 @@ void withdraw()
     string emailAddress;
     string kycDocuments[2];
     cout<<"Searching !"<<endl;
-    system("timout /t 2 /nobreak >null");
+    system("timeout /t 2 /nobreak >null");
     if(fobj.is_open())
     {
         cout<<"Found!"<<endl;
@@ -1645,14 +1751,42 @@ void withdraw()
         getline(fobj,kycDocuments[0]);
         getline(fobj,kycDocuments[1]);
         fobj.close();
-        if(balance-with>1000 && with>balance)
+/*        
+            cout<<"Cusotmer details are:-"<<endl
+            <<"Name: "<<name<<endl
+            <<"Account Number: "<<accno<<endl
+            <<"Account Type: "<<accountType<<endl
+            <<"Account Balance: "<<balance<<endl
+            <<"Address: "<<address<<endl
+            <<"Date of Birth: "<<dateOfBirth<<endl
+            <<"Mobile Number: "<<mobileNumber<<endl
+            <<"Email Address: "<<emailAddress<<endl
+            <<"KYC document: "<<kycDocuments[0]<<" authentication number: "<<kycDocuments[1]<<endl;*/
+        cout<<"current Balance: "<<balance<<endl;
+        if(balance>1000 && (balance-with)>1000 && with<balance)
         {
-        customer temp;
-        balance=balance-with;
-        temp.getcustomer(name,accountNumber,address,branchCode,mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
-        temp.savedata();
-        temp.updatepass();
+            balance=balance-with;
         }
+        else
+        {
+            cout<<"unsufficient funds"<<endl;
+        }
+        cout<<"Update balance: "<<balance<<endl;
+        ofstream file;
+        file.open(t.c_str()+accno);
+        file<<name<<endl
+            <<address<<endl
+            <<branchCode<<endl
+            <<mobileNumber<<endl
+            <<balance<<endl
+            <<accountNumber<<endl
+            <<accountType<<endl
+            <<dateOfBirth<<endl
+            <<emailAddress<<endl
+            <<kycDocuments[0]<<endl
+            <<kycDocuments[1]<<endl;
+        generatepassbook(accountNumber);
+        system("pause");
     }
     else if(!fobj.is_open())
     {
@@ -1662,7 +1796,6 @@ void withdraw()
         system("color 71");
     }
 }
-
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
 //Customer class static int variable next defined

@@ -4,13 +4,13 @@
 -------------------------
 Passbook 
 Cusotmer details are:-
-Name: rohan 
-Account Number: 1
-Account Type: 1
-Account Balance: 10000
-Address: a204 lp-*1
+Name: rojam
+Account Number: 4
+Account Type: 4
+Account Balance: 200000
+Address: aaa
 Date of Birth: savings
-Mobile Number: 59818888459
-Email Address: 16.07.2208
-KYC document: rohanbatra
-authentication number: aadhar
+Mobile Number: 9818888495
+Email Address: 16.07.2005
+KYC document: 5646468@mail.com
+authentication number: eima

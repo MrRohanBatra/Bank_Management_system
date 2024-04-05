@@ -4,13 +4,13 @@
 -------------------------
 Passbook 
 Cusotmer details are:-
-Name: rohan batra
+Name: anemee
 Account Number: 2
-Account Type: saving
-Account Balance: 326743
-Address: a2054
-Date of Birth: 16.07.2005
-Mobile Number: 9818888495
-Email Address: rohanbatra@mail.com
-KYC document: aadhar
-authentication number: 241206601645
+Account Type: 2
+Account Balance: 10100.5
+Address: address
+Date of Birth: savings
+Mobile Number: 98188888496
+Email Address: 16.07.1979
+KYC document: rohanbatra.in@gmail.com
+authentication number: passport
