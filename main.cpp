@@ -24,6 +24,7 @@ string getpass();
 string inttostring(int num);
 string newgetdata();
 string toLowercase(const string& str);
+string getaccounttype();
 int reademployees();
 float grosssalary(float sal);
 void incrementemployees();
@@ -33,6 +34,8 @@ void modifyemployees();
 void deleteemployees();
 void mainmenu();
 void displayemployees();    
+void displayemployees(int a);
+void displayall(int n);
 void taxpayble();          
 float taxpayble(string temp);
 void GeneratePayrollReport();
@@ -51,6 +54,7 @@ void depositmoney();
 void withrawmoney();
 string getdob();
 string getbranch(int a);
+int getnext();
 
 //class prototypes
 class employee;
@@ -98,7 +102,8 @@ void employees()
         }
         case 4:
         {
-            displayemployees();
+           // displayemployees();
+            displayall(getnext());
             system("pause");
             employees();
             break;
@@ -224,7 +229,8 @@ void customers()
 // Function to create necessary directories
 void preloadtest() 
 {
-    std::string sources[5];
+    system("Title Bank Management System");
+    string sources[5];
     // Define directory paths
     sources[3] = "sources\\employees\\payroll_slips";
     sources[0] = "sources\\customers";
@@ -318,10 +324,17 @@ string getpass()
     string temp = "";
     char c;
     while (true) {
-        c = getch(); // Get character input without echoing to console
+        c = getch();
         if (c != 13) {
-            cout << "*"; // Print '*' to mask password
-            temp = temp + c;
+            if (c == 8) {
+                if (temp.length() > 0) {
+                    cout << "\b \b";
+                    temp.erase(temp.length() - 1);
+                }
+            } else {
+                cout << "*";
+                temp = temp + c;
+            }
         }
         else if (c == 13) {
             break;
@@ -330,6 +343,7 @@ string getpass()
     cout << endl;
     return temp;
 }
+
 
 // Function to display main menu
 void mainmenu() 
@@ -391,6 +405,10 @@ class employee
         string department;
         float salary;
     public:
+        friend int getnext()
+        {
+            return next;
+        }
         int id = next++;
         float net_salary() 
         {
@@ -858,6 +876,47 @@ void displayemployees()
     fobj.close();
 }
 
+void displayemployees(string a)
+{
+    cout<<endl;
+    string temp=a;
+    // cout<<"Enter Employee ID: ";
+    // cin>>temp;
+    ifstream fobj;
+    fobj.open("sources\\employees\\"+temp);
+    if(fobj.is_open())
+    {   
+        string name,depart;
+        int age,temp1;
+        float sal;
+        getline(fobj,name);
+        fobj>>temp1;
+        fobj>>age;
+        fobj>>sal;
+        fobj.ignore();
+        getline(fobj,depart);
+        string l = "----------------------------------";
+        cout<<l<<endl;
+        cout<<"Employee Name:        "<<name<<endl
+            <<"employee ID:          "<<temp<<endl
+            <<"Employee Age:         "<<age<<endl
+            <<"Employee Salary:      "<<fixed<<setprecision(3)<<sal<<endl
+            <<"Employee Department : "<<depart<<endl
+            <<l<<endl;
+        
+    }
+    else if(!fobj.is_open())
+    {
+        system("cls");
+        system("color 74");
+        cout<<"Employee ID not found "<<endl;
+        system("timeout /t 1 /nobreak >nul");
+        //displayemployees();
+    }
+    fobj.close();
+}
+
+
 void modifyemployees() {
     system("cls");
     int id;
@@ -1135,12 +1194,14 @@ void deletecustomer()
         string execute="cmd /c del sources\\customers\\"+temp;
         system(execute.c_str());
         cout<<"Customer Data Successfully Deleted"<<endl;
+        system("pause");
     }
     else
     {
         system("color 74");
         cout<<"Customer not found"<<endl;
         system("timeout /t 1 /nobreak >nul");
+        system("pause");
         system("color 71");
     }
     fobj.close();
@@ -1224,6 +1285,22 @@ float taxpayble(string temp)
         system("color 74");
         cout<<"Incorrect Employee ID"<<endl;
         system("timeout /t 2 /nobreak >nul");
+    }
+}
+
+void displayall(int n)
+{
+    cout<<"Searching!"<<endl;
+    system("timeout /t 2 /nobreak >null");
+    cout<<"Found!\nEmployee Details are:"<<endl;
+    for(int i=23104001;i<=n;i++)
+    {
+        ifstream fobj;
+        fobj.open("sources\\employees\\"+inttostring(i));
+        if(fobj.is_open())
+        {
+            displayemployees(inttostring(i));
+        }
     }
 }
 
@@ -1397,7 +1474,7 @@ void addcustomer()
     cout<<"Balance: ";
     cin>>balance;
     cout<<"Account Type: ";
-    cin>>accountType;
+    accountType=getaccounttype();cout<<endl;
     cout<<"Email Address: ";
     cin>>emailAddress;
     cout<<"Enter KYC Document: ";
@@ -1796,6 +1873,23 @@ void withrawmoney()
         system("color 71");
     }
 }
+
+string getaccounttype()
+{
+    char temp;
+    temp=getch();
+    if(temp=='s' || temp=='S')
+    {
+        cout<<"Savings";
+        return "Savings";
+    }
+    else if(temp=='c' || temp=='C')
+    {
+        cout<<"Current";
+        return "Current";
+    }
+}
+
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
 //Customer class static int variable next defined
