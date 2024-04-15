@@ -274,6 +274,7 @@ bool loginsystem() {
         if (checkfilepass(temp)) {
             system("color 71"); // Change console color
             cout << "Welcome " << temp << " to JAYPEE BANKS" << endl;
+            system("timeout /t 3 /nobreak >null");
             return true;
         }
         else if (temp == "exit") {
