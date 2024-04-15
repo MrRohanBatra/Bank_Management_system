@@ -102,8 +102,8 @@ void employees()
         }
         case 4:
         {
-           // displayemployees();
-            displayall(getnext());
+           displayemployees();
+            //displayall(getnext());
             system("pause");
             employees();
             break;
@@ -837,7 +837,6 @@ int reademployees()
 
 void displayemployees()
 {
-    system("cls");
     string temp;
     cout<<"Enter Employee ID: ";
     cin>>temp;
@@ -864,7 +863,8 @@ void displayemployees()
             <<"Employee Salary:      "<<fixed<<setprecision(3)<<sal<<endl
             <<"Employee Department : "<<depart<<endl
             <<l<<endl;
-        
+        system("pause");
+        system("cls");       
     }
     else if(!fobj.is_open())
     {
