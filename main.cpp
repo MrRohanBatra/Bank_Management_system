@@ -96,7 +96,6 @@ void employees()
         case 3:
         {
             deleteemployees();
-            system("pause");
             employees();
             break;
         }
@@ -268,15 +267,15 @@ void preloadtest()
 bool loginsystem() {
     int count = 0;
     while (count < 3) {
-        cout<<"Enter Username: ";
+        cout<<"\t\t\tEnter Username: ";
         string uname;
         cin>>uname;
-        cout << "Enter password: ";
+        cout << "\t\t\tEnter password: ";
         string temp;
         temp = getpass();
         if (checkfilepass(temp)) {
             system("color 71"); // Change console color
-            cout << "Welcome " << temp << " to JAYPEE BANKS" << endl;
+            cout << "\t\t\tWelcome " << temp << " to JAYPEE BANKS" << endl;
             system("timeout /t 3 /nobreak >null");
             return true;
         }
@@ -408,12 +407,28 @@ class employee
         int age;
         string department;
         float salary;
+        int id;
     public:
         friend int getnext()
         {
             return next;
         }
-        int id = next++;
+        employee (string no)
+        {
+            employee getemp;
+            ifstream fobj;
+            fobj.open("sources\\employees\\"+no);
+            if (fobj.is_open())
+            {
+                getline(fobj,name);
+                fobj>>id;
+                fobj>>age;
+                fobj>>salary;
+                fobj.ignore();
+                getline(fobj,department);
+                fobj.close();
+            }
+        }
         float net_salary() 
         {
             float net;
@@ -457,16 +472,17 @@ class employee
                 this->age = 0;
             }
             this->salary = sal;
+            id=next++;
             cout << "Employee ID generated: " << id << endl;
         }
 
         // Overloaded stream insertion operator
         friend ostream &operator<<(ostream &out, employee &obj) 
         {
-            out << "Name:        " << obj.name << endl
-                << "ID:         " << obj.id << endl
-                << "Age:        " << obj.age << endl
-                << "Salary:     " << obj.salary << endl
+            out << "Name: " << obj.name << endl
+                << "ID: " << obj.id << endl
+                << "Age: " << obj.age << endl
+                << "Salary: " << obj.salary << endl
                 << "Department: " << obj.department << endl;
             return out;
         }
@@ -556,6 +572,27 @@ class customer
     public:
         static int next;
         customer(){}
+        customer(string accno)
+        {
+            ifstream fobj;
+            fobj.open("sources\\customers\\"+accno);
+            if(fobj.is_open())
+            {
+                getline(fobj,name);
+                getline(fobj,address);
+                getline(fobj,branchCode);
+                fobj>>mobileNumber;
+                fobj>>balance;
+                fobj>>accountNumber;
+                fobj.ignore();
+                getline(fobj,accountType);
+                getline(fobj,dateOfBirth);
+                getline(fobj,emailAddress);
+                getline(fobj,kycDocuments[0]);
+                getline(fobj,kycDocuments[1]);
+                fobj.close();
+            }
+        }
         customer(customer &obj)
         {
             this->name=obj.name;
@@ -691,6 +728,21 @@ class customer
             }
             fobj.close();
             savedata();
+        }
+        friend ostream &operator<<(ostream &out,customer &obj)
+        {
+            out <<"Name: "<<obj.name<<endl
+                <<"Address: "<<obj.address<<endl
+                <<"Branch Code: "<<obj.branchCode<<endl
+                <<"Mobile Number: "<<obj.mobileNumber<<endl
+                <<"Balance: "<<obj.balance<<endl
+                <<"Account Number: "<<obj.accountNumber<<endl
+                <<"Account type: "<<obj.accountType<<endl
+                <<"Date Of Birth: "<<obj.dateOfBirth<<endl
+                <<"Email Address: "<<obj.emailAddress<<endl
+                <<"KYC Document: "<<obj.kycDocuments[0]<<endl
+                <<obj.kycDocuments[0]<<" "<<"Number: "<<obj.kycDocuments[1]<<endl;
+            return out;
         }
 };
 
@@ -1179,9 +1231,20 @@ void deleteemployees()
     if(fobj.is_open())
     {
         fobj.close();
-        string execute="cmd /c del sources\\employees\\"+temp;
-        system(execute.c_str());
-        cout<<"Employee Successfully Deleted"<<endl;
+        employee test(temp);
+        cout<<"------------------------------------"<<endl;
+        cout<<test;
+        cout<<"------------------------------------"<<endl;
+        string confirm;
+        cout<<"Are you sure you want to delete employee "+temp+"(yes/no): ";
+        cin>>confirm;
+        if(toLowercase(confirm)=="y"|| toLowercase(confirm)=="yes")
+        {
+            string execute="cmd /c del sources\\employees\\"+temp;
+            system(execute.c_str());
+            cout<<"Employee Data Successfully Deleted"<<endl;
+            system("pause");
+        }
     }
     else
     {
@@ -1204,11 +1267,21 @@ void deletecustomer()
     system("timeout /t 1 /nobreak >nul");
     if(fobj.is_open())
     {
+        customer test(temp);
+        cout<<"------------------------------------"<<endl;
+        cout<<test;
+        cout<<"------------------------------------"<<endl;
         fobj.close();
-        string execute="cmd /c del sources\\customers\\"+temp;
-        system(execute.c_str());
-        cout<<"Customer Data Successfully Deleted"<<endl;
-        system("pause");
+        string confirm;
+        cout<<"Are you sure you want to delete customer "+temp+"(yes/no): ";
+        cin>>confirm;
+        if(toLowercase(confirm)=="y"|| toLowercase(confirm)=="yes")
+        {
+            string execute="cmd /c del sources\\customers\\"+temp;
+            system(execute.c_str());
+            cout<<"Customer Data Successfully Deleted"<<endl;
+            system("pause");
+        }
     }
     else
     {
