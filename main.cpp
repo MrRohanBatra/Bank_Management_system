@@ -268,6 +268,9 @@ void preloadtest()
 bool loginsystem() {
     int count = 0;
     while (count < 3) {
+        cout<<"Enter Username: ";
+        string uname;
+        cin>>uname;
         cout << "Enter password: ";
         string temp;
         temp = getpass();
@@ -281,7 +284,7 @@ bool loginsystem() {
             return false;
         }
         system("color 74"); // Change console color
-        cout << "Incorrect password!\nPlease retry" << endl;
+        cout << "Incorrect password!\nPlease retry\n"<<2-count<<" chances left" << endl;
         count++;
     }
     return false;
@@ -1105,6 +1108,11 @@ int newgetdataint()
     while (true) 
     {
         char ch = getch(); 
+        if(ch<48 || ch>57)
+        {
+            throw "Enter an integer";
+            break;
+        }
         if (ch == 13) 
             break; // Exit the loop if Enter key is pressed
 
@@ -1120,13 +1128,18 @@ long long int newgetdatalint() {
     string number;
     char ch;
     while (true) {
-        ch = getchar(); // Read a character from standard input
+        ch = getchar();
+       if(ch<48 || ch>57)
+        {
+            throw "Enter an integer";
+            break;
+        } 
         if (ch == '\n') // Exit the loop if Enter key is pressed
             break;
-        else if (ch == '\b') { // Handle backspace
+        else if (ch == '\b') {
             if (!number.empty()) {
-                cout << "\b \b"; // Move cursor back, erase character, move cursor back again
-                number.pop_back(); // Remove last character from string
+                cout << "\b \b"; 
+                number.pop_back(); 
             }
         }
         else if (isdigit(ch)) {
@@ -1306,7 +1319,11 @@ void displayall(int n)
 }
 
 float grosssalary(float sal)
-{            
+{   if(sal<=0)
+    {
+        throw "Salary cannot be zero";
+    }
+    else{
     float net;
     float deductions;
     float allowances;
@@ -1314,10 +1331,12 @@ float grosssalary(float sal)
     allowances = sal * 0.05;
     net = sal - deductions + allowances;
     return net;
+    }
 }
 
 void GeneratePayrollSlip()
 {
+    try{
     cout<<"Enter Employee ID: ";
     int id;
     cin>>id;
@@ -1369,7 +1388,11 @@ void GeneratePayrollSlip()
                 system("color 71");
             }   
 }
-
+    catch(const char *s)
+    {
+        cout<<s<<endl;
+    }
+}
 void GeneratePayrollReport()
 {
     system("cls");
@@ -1526,11 +1549,10 @@ string getbranch(int a)
 }
 
 string toLowercase(const string& str) {
-    string result = str; // Make a copy of the input string
+    string result = str; 
     
-    // Loop through each character and convert to lowercase
     for (int i = 0; i < result.size(); ++i) {
-        result[i] = tolower(result[i]); // Convert character to lowercase
+        result[i] = tolower(result[i]); 
     }
     
     return result;
@@ -1897,11 +1919,18 @@ int employee::next = 23104001+reademployees();
 int customer::next=1+readcustomers();
 int main() 
 {
-    preloadtest();
-    welcome();
-    if(loginsystem())
-    {
-        mainmenu();
+    try{
+        preloadtest();
+        welcome();
+        if(loginsystem())
+        {
+            mainmenu();
+        }
+        return 0;
     }
-    return 0;
+    catch(const char *s)
+    {
+        cout<<s<<endl;
+        return 1;
+    }
 }
