@@ -1916,7 +1916,7 @@ string getaccounttype()
 //Employee class static int variable next defined
 int employee::next = 23104001+reademployees();
 //Customer class static int variable next defined
-int customer::next=1+readcustomers();
+int customer::next=10001+readcustomers();
 int main() 
 {
     try{
