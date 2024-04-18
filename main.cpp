@@ -269,13 +269,13 @@ bool loginsystem() {
     while (count < 3) {
         cout<<"\t\t\tEnter Username: ";
         string uname;
-        cin>>uname;
+        getline(cin,uname);
         cout << "\t\t\tEnter password: ";
         string temp;
         temp = getpass();
         if (checkfilepass(temp)) {
             system("color 71"); // Change console color
-            cout << "\t\t\tWelcome " << temp << " to JAYPEE BANKS" << endl;
+            cout << "\t\t\tWelcome " << uname << " to JAYPEE BANKS" << endl;
             system("timeout /t 3 /nobreak >null");
             return true;
         }
@@ -283,7 +283,7 @@ bool loginsystem() {
             return false;
         }
         system("color 74"); // Change console color
-        cout << "Incorrect password!\nPlease retry\n"<<2-count<<" chances left" << endl;
+        cout << endl<<"\t\t\tIncorrect password!\n\t\t\tPlease retry\n\t\t\t"<<2-count<<" chances left" << endl<<endl;
         count++;
     }
     return false;
