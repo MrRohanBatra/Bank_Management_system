@@ -34,7 +34,7 @@ void modifyemployees();
 void deleteemployees();
 void mainmenu();
 void displayemployees();    
-void displayemployees(int a);
+void displayemployees(string a);
 void displayall(int n);
 void taxpayble();          
 float taxpayble(string temp);
