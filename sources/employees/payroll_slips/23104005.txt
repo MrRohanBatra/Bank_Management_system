@@ -1,0 +1,15 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Payroll Slip
+-------------------------
+Employee Name: rohanbatra
+Employee Age: 34
+Employee ID: 23104005
+Department: sfdgo
+Gross Salary: 453224.000
+-------------------------
+Net Salary: 430562.812
+Tax Payable: 45322.398
+-------------------------

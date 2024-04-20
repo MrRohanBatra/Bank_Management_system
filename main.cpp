@@ -1432,7 +1432,7 @@ void GeneratePayrollSlip()
         fobj1.ignore();
         getline(fobj1,depart);
         fobj1.close();
-    }
+    
     ofstream fobj;
             string id1 = inttostring(id);
             string filepath = "sources\\employees\\payroll_slips\\" + id1 + ".txt";
@@ -1449,18 +1449,20 @@ void GeneratePayrollSlip()
                     << "Employee Age: " << age << endl
                     << "Employee ID: " << id << endl
                     << "Department: " << depart << endl
-                    << "Gross Salary: " << setprecision(3)<<sal << endl
+                    << "Gross Salary: " <<fixed <<setprecision(3)<<sal << endl
                     << l << endl
-                    << "Net Salary: " << setprecision(3)<<grosssalary(sal) << endl
-                    << "Tax Payable: " << setprecision(3)<<taxpayble(inttostring(id)) << endl;
+                    << "Net Salary: " <<fixed << setprecision(3)<<grosssalary(sal) << endl
+                    << "Tax Payable: " <<fixed << setprecision(3)<<taxpayble(inttostring(id)) << endl;
                 fobj<<"-------------------------"<<endl;
                 fobj.close();
                 cout << "Payroll Slip saved to " << filepath << endl;
                 string execute = "notepad.exe " + filepath; // Open generated payroll slip in Notepad
                 system(execute.c_str());
             }
+    }
             else {
                 system("color 74");
+                cout<< "Employee not found!"<<endl;
                 cout << "Error in generating payroll slip" << endl;
                 system("timeout /t 1 /nobreak >null");
                 system("color 71");
@@ -1473,7 +1475,7 @@ void GeneratePayrollSlip()
 }
 void GeneratePayrollReport()
 {
-    system("cls");
+    // system("cls");
     cout<<"Enter Employee ID: ";
     int id;
     cin>>id;
@@ -1488,6 +1490,7 @@ void GeneratePayrollReport()
         fobj>>id;
         fobj>>age;
         fobj>>sal;
+        fobj.ignore(); //test
         getline(fobj,depart);
         system("cls");
         string l = "-------------------------";
