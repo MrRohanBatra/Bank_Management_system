@@ -607,6 +607,7 @@ class customer
             this->kycDocuments[0]=obj.kycDocuments[0];
             this->kycDocuments[1]=obj.kycDocuments[1];   
         }
+        
         customer(string n,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
         {
             name=n;
@@ -624,6 +625,7 @@ class customer
             }
             cout<<"Account Number generated: "<<accountNumber<<endl;
         }
+        
         customer(string n,long long int accno,string add,string branch,long long int mob,float bal,string acctype,string dob,string email,string kyc[])
         {
             name=n;
@@ -683,6 +685,7 @@ class customer
             fobj.close();
             return loaded;
         }
+        
         void savedata()
         {
             ofstream fobj;
@@ -703,6 +706,7 @@ class customer
             }
             fobj.close();
         }
+        
         void updatepass(long long int accno)
         {
             ofstream fobj;
@@ -729,6 +733,7 @@ class customer
             fobj.close();
             savedata();
         }
+        
         friend ostream &operator<<(ostream &out,customer &obj)
         {
             out <<"Name: "<<obj.name<<endl
