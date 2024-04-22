@@ -1375,6 +1375,11 @@ float taxpayble(string temp)
         cout<<"Incorrect Employee ID"<<endl;
         system("timeout /t 2 /nobreak >nul");
         system("color 71");
+        return 1;
+    }
+    else
+    {
+        return 1;
     }
 }
 
@@ -1625,6 +1630,7 @@ string getbranch(int a)
             return branch[i];
         }
     }
+    return branch[0];
 }
 
 string toLowercase(const string& str) {
@@ -1989,6 +1995,11 @@ string getaccounttype()
     {
         cout<<"Current";
         return "Current";
+    }
+    else
+    {
+        cout<<"Minor";
+        return "Minor";
     }
 }
 
