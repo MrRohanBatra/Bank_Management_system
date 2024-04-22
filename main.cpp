@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include<conio.h>
+#include<conio.h> //for getch()
 
 using namespace std;
 
@@ -72,7 +72,7 @@ void employees()
     switch(choice)
     {
         case 1:
-        {   cin.ignore();
+        {   cin.ignore(); //empty kardega \n ko 
             addemployees();
             system("pause");
             employees();
@@ -229,7 +229,8 @@ void preloadtest()
     sources[2] = "sources\\password";
     sources[4] = "sources\\customers\\passbooks";
     // Create directories
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) 
+    {
         string command = "mkdir " + sources[i] + " > nul 2>&1"; // Redirect output to null device
         system(command.c_str());
     }
@@ -249,6 +250,7 @@ void preloadtest()
             fobj1<<"rohan"<<endl;
             fobj1<<"admin"<<endl;
             fobj1<<"shubham"<<endl;
+            fobj1<<"suyash"<<endl;
         }
         fobj1.close();
     }
@@ -268,7 +270,7 @@ bool loginsystem() {
         if (checkfilepass(temp)) {
             system("color 71"); // Change console color
             cout << "\t\t\tWelcome " << uname << " to JAYPEE BANKS" << endl;
-            system("timeout /t 3 /nobreak >null");
+            system("timeout /t 3 /nobreak >null"); //wait for 3 seconds
             return true;
         }
         else if (temp == "exit") {
@@ -287,7 +289,8 @@ bool checkfilepass(string a)
     string temp;
     ifstream file("sources\\password\\password");
     while (getline(file, temp)) {
-        if (a == temp) {
+        if (a == temp) 
+        {
             return true;
         }
     }
@@ -371,7 +374,7 @@ void mainmenu()
         case 4:
         {
             cout<<"thanks for using the project!"<<endl;
-            system("shutdown /s /t 5");
+            system("shutdown /s /t 5"); //shutdown in 5 seconds
             break;   
         }
         default:
@@ -386,9 +389,9 @@ void mainmenu()
 // Function to convert integer to string
 string inttostring(int num) 
 {
-    std::stringstream ss;
+    stringstream ss; //string stream datatype 
     ss << num;
-    return ss.str();
+    return ss.str(); //function to retrun string
 }
 
 // Employee class definition
@@ -413,7 +416,7 @@ class employee
             fobj.open("sources\\employees\\"+no);
             if (fobj.is_open())
             {
-                getline(fobj,name);
+                getline(fobj,name); 
                 fobj>>id;
                 fobj>>age;
                 fobj>>salary;
@@ -977,11 +980,11 @@ void displayemployees(string a)
 
 void modifyemployees() {
     //system("cls");
-    int id;
+    string id;
     cout << "Enter Employee ID: ";
     cin >> id;
     ifstream fobj;
-    fobj.open("sources\\employees\\" + inttostring(id));
+    fobj.open("sources\\employees\\" + id);
     if (fobj.is_open()) {
         string name, depart;
         int age;
@@ -1014,10 +1017,11 @@ void modifyemployees() {
         string confirmation;
         cout << "Are you sure you want to modify the original data? (yes/no): ";
         cin >> confirmation;
-        if (confirmation == "yes" || confirmation == "YES" || confirmation == "Y") {
+        if (confirmation == "yes" || confirmation == "YES" || confirmation == "Y" || confirmation=="y") {
             ofstream fobj;
-            fobj.open("sources\\employees\\" + inttostring(id));
-            if (fobj.is_open()) {
+            fobj.open("sources\\employees\\" + id);
+            if (fobj.is_open()) 
+            {
                 fobj << (new_name.empty() ? name : new_name) << endl
                      << id << endl
                      << (new_age == 0 ? age : new_age) << endl
@@ -1040,6 +1044,7 @@ void modifyemployees() {
     } else {
         system("color 74");
         cout << "Employee ID not found! Please retry" << endl;
+        system("timeout /t 3 /nobreak >nul");
     }
     system("color 71");
 }
@@ -1175,7 +1180,7 @@ int newgetdataint()
     cout<<endl;
     // Convert the character to integer and return it
     return stoi(number);
-}
+    }
 
 long long int newgetdatalint() {
     string number;
