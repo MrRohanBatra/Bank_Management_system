@@ -50,5 +50,5 @@ The Bank Management System is a comprehensive software solution developed in C++
 
 ### Usage
 3. Run Application:
-   Powershell->```bash
-               .\bank_management_system
+   ```bash
+   .\bank_management_system
