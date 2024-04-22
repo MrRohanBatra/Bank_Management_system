@@ -44,4 +44,5 @@ The Bank Management System is a comprehensive software solution developed in C++
    git clone https://github.com/MrRohanBatra/Bank_Management_system.git
 ### Compile Code
 2.Compile the code:
-```bash g++ main.cpp -o bank_management_system
+```bash
+g++ main.cpp -o bank_management_system
