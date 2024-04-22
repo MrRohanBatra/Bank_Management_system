@@ -81,7 +81,7 @@ void employees()
         case 2:
         {
             modifyemployees();
-            system("pause");
+            //system("pause");
             employees();
             break;
         }
@@ -145,7 +145,7 @@ void customers()
         <<"3) Delete Customer"<<endl
         <<"4) Change Branch"<<endl
         <<"5) Generate Passbook"<<endl
-        <<"6) Display Data"<<endl
+        <<"6) Display Customer"<<endl
         <<"7) Deposit Money"<<endl
         <<"8) Withdraw Money"<<endl
         <<"9) Exit to previous menu"<<endl
@@ -308,7 +308,7 @@ void welcome()
     cout << "\t\t\t|      Shubham Rawat         23104043|\n";
     cout << "\t\t\t|      Suyash Bajpai         23104049|\n";
     cout << "\t\t\t|____________________________________|\n\n";
-    cout << "\t\t\t  Press any key to continue...      ";
+    cout << "\t\t\tPress any key to continue...      ";
     getch(); // Wait for user input
     cout << endl;
     system("color 71"); // Change console color
@@ -776,8 +776,10 @@ void display_customers()
         getline(fobj,kycDocuments[0]);
         getline(fobj,kycDocuments[1]);
         fobj.close();
-        cout<<"Cusotmer details are:-"<<endl
-            <<"Name: "<<name<<endl
+        cout<<"Customer details are:-"<<endl;
+        string l = "----------------------------------";
+        cout<<l<<endl;
+        cout<<"Name: "<<name<<endl
             <<"Account Number: "<<accno<<endl
             <<"Account Type: "<<accountType<<endl
             <<"Account Balance: "<<balance<<endl
@@ -785,7 +787,9 @@ void display_customers()
             <<"Date of Birth: "<<dateOfBirth<<endl
             <<"Mobile Number: "<<mobileNumber<<endl
             <<"Email Address: "<<emailAddress<<endl
-            <<"KYC document: "<<kycDocuments[0]<<" authentication number: "<<kycDocuments[1]<<endl;
+            <<"KYC document: "<<kycDocuments[0]
+            <<kycDocuments[0]<<" number: "<<kycDocuments[1]<<endl;
+        cout<<l<<endl;
         system("pause");
     }
     else
@@ -793,7 +797,7 @@ void display_customers()
         fobj.close();
         system("color 74");
         cout<<"Incorrect Employee ID !"<<endl;
-        system("timout /t 2 /nobreak >null");
+        system("timeout /t 2 /nobreak >null");
         system("color 71");
     }
 }
@@ -972,7 +976,7 @@ void displayemployees(string a)
 
 
 void modifyemployees() {
-    system("cls");
+    //system("cls");
     int id;
     cout << "Enter Employee ID: ";
     cin >> id;
@@ -982,16 +986,15 @@ void modifyemployees() {
         string name, depart;
         int age;
         float sal;
-        getline(fobj, name); // Read and discard the newline character left in the stream
+        getline(fobj, name); 
         fobj >> id;
-        fobj.ignore(); // Ignore the newline character left in the stream after reading id
+        fobj.ignore();
         fobj >> age;
-        fobj.ignore(); // Ignore the newline character left in the stream after reading age
+        fobj.ignore();
         fobj >> sal;
-        fobj.ignore(); // Ignore the newline character left in the stream after reading salary
-        getline(fobj, depart); // Read the department using getline
+        fobj.ignore();
+        getline(fobj, depart); 
         fobj.close();
-
         string new_name, new_depart;
         int new_age;
         float new_sal;
@@ -1333,6 +1336,7 @@ void taxpayble()
         system("color 74");
         cout<<"Incorrect Employee ID"<<endl;
         system("timeout /t 2 /nobreak >nul");
+        system("color 71");
     }
 }
 
@@ -1370,6 +1374,7 @@ float taxpayble(string temp)
         system("color 74");
         cout<<"Incorrect Employee ID"<<endl;
         system("timeout /t 2 /nobreak >nul");
+        system("color 71");
     }
 }
 
