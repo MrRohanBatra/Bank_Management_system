@@ -55,3 +55,12 @@ The Bank Management System is a comprehensive software solution developed in C++
 
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your suggested changes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- Special thanks to Rohan Batra(mailto: rohanbatra.in@gmail.com) for their guidance and support throughout the development process.
+- This project was inspired by the need for a reliable and efficient system to manage banking operations and improve customer service.
