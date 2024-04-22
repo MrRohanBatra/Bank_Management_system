@@ -790,7 +790,7 @@ void display_customers()
             <<"Date of Birth: "<<dateOfBirth<<endl
             <<"Mobile Number: "<<mobileNumber<<endl
             <<"Email Address: "<<emailAddress<<endl
-            <<"KYC document: "<<kycDocuments[0]
+            <<"KYC document: "<<kycDocuments[0]<<endl
             <<kycDocuments[0]<<" number: "<<kycDocuments[1]<<endl;
         cout<<l<<endl;
         system("pause");
