@@ -54,3 +54,4 @@ The Bank Management System is a comprehensive software solution developed in C++
    .\bank_management_system
 
 ## Contributing
+Contributions are welcome! Please fork the repository and create a pull request with your suggested changes.
