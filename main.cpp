@@ -1051,7 +1051,7 @@ void modifyemployees() {
 
 void modifycustomer()
 {
-    system("cls");
+    //system("cls");
     string name;
     string address;
     string branchCode;
@@ -1187,11 +1187,6 @@ long long int newgetdatalint() {
     char ch;
     while (true) {
         ch = getchar();
-       if(ch<48 || ch>57)
-        {
-            throw "Enter an integer";
-            break;
-        } 
         if (ch == '\n') // Exit the loop if Enter key is pressed
             break;
         else if (ch == '\b') {
@@ -1687,7 +1682,7 @@ void changebranch()
         cin>>t;
         customer temp(name,accountNumber,address,getbranch(t),mobileNumber,balance,accountType,dateOfBirth,emailAddress,kycDocuments);
         cout<<"Branch changed"<<endl;
-        system("timout /t 1 /nobreak >null");
+        system("timout /t 3 /nobreak >null");
         temp.savedata();
     }
     else if(!fobj.is_open())

@@ -1,0 +1,15 @@
+			______________________________________
+			|           JAYPEE BANKS             |
+			|____________________________________|
+-------------------------
+Payroll Slip
+-------------------------
+Employee Name: rohan batra
+Employee Age: 18
+Employee ID: 23104020
+Department: ceo of testing
+Gross Salary: 6640.160
+-------------------------
+Net Salary: 6308.152
+Tax Payable: 664.016
+-------------------------
