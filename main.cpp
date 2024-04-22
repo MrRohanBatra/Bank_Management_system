@@ -1,13 +1,5 @@
-#include<iostream>
-#include<string>
-#include<windows.h>
-#include<fstream>
-#include<conio.h>
-#include<stdlib.h>
-#include<iomanip>
-#include<sstream>
-#include<conio.h>
-#include<limits>
+
+#include<bits/stdc++.h>
 
 using namespace std;
 
