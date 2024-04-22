@@ -60,6 +60,12 @@ Contributions are welcome! Please fork the repository and create a pull request 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+Special thanks to [Rohan Batra](mailto:rohanbatra.in@gmail.com) for his guidance and support throughout the development process.
+
+This project was inspired by the need for a reliable and efficient system to manage banking operations and improve customer service.
+
+
+
 ## Acknowledgements
 
 - Special thanks to Rohan Batra(mailto: rohanbatra.in@gmail.com) for their guidance and support throughout the development process.
