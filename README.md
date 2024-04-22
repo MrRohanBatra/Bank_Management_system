@@ -32,11 +32,11 @@ The Bank Management System is a comprehensive software solution developed in C++
 
 ## Getting Started
 
-## Installation
-
 ### Prerequisites
 - C++ compiler (e.g., g++)
 - Git
+
+## Installation
 
 ### Clone Repository
 1. Clone the repository:
