@@ -46,4 +46,4 @@ The Bank Management System is a comprehensive software solution developed in C++
 ### Compile Code
 2. Compile the code:
    ```bash
-g++ main.cpp -o bank_management_system
+   g++ main.cpp -o bank_management_system
