@@ -1,5 +1,5 @@
-
 #include<bits/stdc++.h>
+#include<conio.h>
 
 using namespace std;
 
@@ -303,9 +303,10 @@ void welcome()
     cout << "\t\t\t|           JAYPEE BANKS             |\n";
     cout << "\t\t\t|____________________________________|\n";
     cout << "\t\t\t|      Project developed by:         |\n";
+    cout << "\t\t\t|                                    |\n";
     cout << "\t\t\t|      Rohan Batra           23104056|\n";
-    cout << "\t\t\t|                                    |\n";
-    cout << "\t\t\t|                                    |\n";
+    cout << "\t\t\t|      Shubham Rawat         23104043|\n";
+    cout << "\t\t\t|      Suyash Bajpai         23104049|\n";
     cout << "\t\t\t|____________________________________|\n\n";
     cout << "\t\t\t  Press any key to continue...      ";
     getch(); // Wait for user input
@@ -1157,11 +1158,11 @@ int newgetdataint()
     while (true) 
     {
         char ch = getch(); 
-        if(ch<48 || ch>57)
-        {
-            throw "Enter an integer";
-            break;
-        }
+        // if(ch<'1' || ch>'9')
+        // {
+        //     throw "Enter an integer";
+        //     break;
+        // }
         if (ch == 13) 
             break; // Exit the loop if Enter key is pressed
 
